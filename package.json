@@ -1,0 +1,27 @@
+{
+  "name": "stat-table",
+  "version": "1.0.0",
+  "description": "simple framework for user stat on backend",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lutaoact/stat-table.git"
+  },
+  "author": "lutaoact",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/lutaoact/stat-table/issues"
+  },
+  "homepage": "https://github.com/lutaoact/stat-table#readme",
+  "dependencies": {
+    "async": "1.5.2",
+    "csv": "0.4.6",
+    "lodash": "4.13.1",
+    "moment": "2.11.1",
+    "myasync": "0.0.3",
+    "redis": "2.6.3"
+  }
+}
