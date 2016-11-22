@@ -113,6 +113,7 @@ StatTable.prototype.buildRetentionTable = function(days, cb) {
     },
     (err) => {
       if (err) return cb(err);
+      results.unshift(csvFirstLine(days));
       cb(null, results);
     }
   );
@@ -127,7 +128,6 @@ StatTable.prototype.exportRetention = function(dirPath, days, cb) {
     },
     csvStr: (_cb, ret) => {
       console.log('stringify now...');
-      ret.results.unshift(csvFirstLine(days));
       csv.stringify(ret.results, _cb);
     },
     writeFile: (_cb, ret) => {

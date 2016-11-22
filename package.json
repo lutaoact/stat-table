@@ -1,6 +1,6 @@
 {
   "name": "stat-table",
-  "version": "2.0.1",
+  "version": "2.1.1",
   "description": "simple framework for user stat on backend",
   "main": "index.js",
   "scripts": {
