@@ -48,12 +48,14 @@ __结果格式__
 ## 其它功能
 
 ```js
-//获取在指定日期注册，并在指定天数之后的留存用户id，baseDate为指定日期，格式为YYYYMMDD，afterNum为指定的天数
+//baseDate均表示指定日期，格式为YYYYMMDD
+
+//获取在指定日期注册，并在指定天数之后依然留存的用户id，afterNum为指定的天数
 stat.getRetentionUserIds(baseDate, afterNum, (err, userIds) => {});
 
-//获取在指定日期注册的用户id，baseDate为指定日期，格式为YYYYMMDD
+//获取在指定日期注册的用户id
 stat.getRegisterUserIds(baseDate, (err, userIds) => {});
 
-//获取在指定日期登录的用户id，baseDate为指定日期，格式为YYYYMMDD
+//获取在指定日期登录的用户id
 stat.getLoginUserIds(baseDate, (err, userIds) => {});
 ```
