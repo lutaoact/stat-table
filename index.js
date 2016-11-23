@@ -48,6 +48,10 @@ StatTable.prototype.addToZset = function(key, score, member, cb) {
   this.client.zadd(key, score, member, cb);
 };
 
+StatTable.prototype.getListFromZset = function(key, cb) {
+  this.client.zrange(key, 0, -1, cb);
+};
+
 StatTable.prototype.recordRegister = function(uid, cb) {
   cb = cb || console.log;
   let date = formatDate();
@@ -139,23 +143,38 @@ StatTable.prototype.exportRetention = function(dirPath, days, cb) {
 };
 
 StatTable.prototype.getRetentionNums = function(baseDate, count, cb) {
-  let commands = [['zcard', redisKey.register(baseDate)]];
+  let commands = [
+    ['zcard', redisKey.login(baseDate)],
+    ['zcard', redisKey.register(baseDate)],
+  ];
   for (let i = 1; i <= count; i++) {
     commands.push(['zcard', redisKey.retention(baseDate, i)]);
   }
   this.client.multi(commands).exec(cb);
 };
 
+StatTable.prototype.getRegisterUserIds = function(date, cb) {
+  this.getListFromZset(redisKey.register(date), cb);
+};
+
+StatTable.prototype.getLoginUserIds = function(date, cb) {
+  this.getListFromZset(redisKey.login(date), cb);
+};
+
+StatTable.prototype.getRetentionUserIds = function(baseDate, afterNum, cb) {
+  this.getListFromZset(redisKey.retention(baseDate, afterNum), cb);
+};
+
 StatTable.prototype.buildOneLine = function(date, count, cb) {
   this.getRetentionNums(date, count, (err, nums) => {
     if (err) return cb(err);
-    nums.unshift(date);//csv的一行数据
+    nums.unshift(date);//csv的一行数据，第一个字段是日期
     cb(null, nums);
   });
 };
 
 function csvFirstLine(days) {//csv的首行标题
-  return ['date', 'registerNum'].concat(
+  return ['date', 'loginNum', 'registerNum'].concat(
     _.map(_.range(1, days + 1), function(num) {
       return `${num}day`;
     })
