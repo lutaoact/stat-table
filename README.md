@@ -9,6 +9,11 @@ node   v4.x
 redis  v3.2.x
 ```
 
+## 安装
+```sh
+npm install --save --save-exact stat-table
+```
+
 ## 示例
 __使用模块__
 
