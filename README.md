@@ -1,7 +1,7 @@
 # stat-table
 服务器端用户留存统计的简易框架
 
-模块暂时只支持日留存统计，后续可能会加入周留存率的计算。
+模块暂时只支持日留存统计，后续可能会加入周留存率的计算。如果用户数庞大，建议将留存数据放在单独的redis服务器上，减少生成统计数据过程中可能对业务服务器造成的冲击。
 
 ## 依赖环境
 ```
@@ -15,7 +15,7 @@ __使用模块__
 导出对象供使用，写在一个公用文件中，比如`common/stat.js`
 ```js
 const StatTable = require('stat-table');
-const stat = new StatTable({host, port, db});//es6的写法
+const stat = new StatTable({host, port, db});//es6的写法，连接redis的配置信息
 module.exports = stat;
 ```
 
@@ -43,4 +43,17 @@ stat.exportRetention(dirPath, days, (err) => {});
 
 __结果格式__
 
-![导出结果](http://7xsgzh.com1.z0.glb.clouddn.com/QQ20161122-1.jpg)
+![导出结果](http://7xsgzh.com1.z0.glb.clouddn.com/QQ20161123-1.jpg)
+
+## 其它功能
+
+```js
+//获取在指定日期注册，并在指定天数之后的留存用户id，baseDate为指定日期，格式为YYYYMMDD，afterNum为指定的天数
+stat.getRetentionUserIds(baseDate, afterNum, (err, userIds) => {});
+
+//获取在指定日期注册的用户id，baseDate为指定日期，格式为YYYYMMDD
+stat.getRegisterUserIds(baseDate, (err, userIds) => {});
+
+//获取在指定日期登录的用户id，baseDate为指定日期，格式为YYYYMMDD
+stat.getLoginUserIds(baseDate, (err, userIds) => {});
+```
