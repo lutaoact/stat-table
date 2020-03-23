@@ -2,7 +2,6 @@
 
 const path = require('path');
 const fs = require('fs');
-const _ = require('lodash');
 const csv = require('csv');
 const async = require('async');
 const myasync = require('myasync');
@@ -174,9 +173,8 @@ StatTable.prototype.buildOneLine = function(date, count, cb) {
 };
 
 function csvFirstLine(days) {//csv的首行标题
-  return ['date', 'loginNum', 'registerNum'].concat(
-    _.map(_.range(1, days + 1), function(num) {
-      return `${num}day`;
-    })
-  );
+  return [
+    'date', 'loginNum', 'registerNum', 
+    ...Array(days).fill('days').map((v, i) => i + 1 + v)
+  ]
 }
